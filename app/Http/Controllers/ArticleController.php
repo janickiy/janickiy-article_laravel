@@ -4,23 +4,34 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Tag;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 
 class ArticleController extends Controller
 {
-    public function index()
+    /**
+     * @return View
+     */
+    public function index(): View
     {
         $articles = Article::allPaginate(10);
         return view('app.article.index', compact('articles'));
     }
 
-    public function show($slug)
+    /**
+     * @param string $slug
+     * @return View
+     */
+    public function show(string $slug): View
     {
         $article = Article::findBySlug($slug);
         return view('app.article.show', compact('article'));
     }
 
-    public function allByTag(Tag $tag)
+    /**
+     * @param Tag $tag
+     * @return View
+     */
+    public function allByTag(Tag $tag): View
     {
         $articles = $tag->articles()->findByTag();
         return view('app.article.byTag', compact('articles'));

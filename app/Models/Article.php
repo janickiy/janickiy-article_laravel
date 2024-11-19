@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Article extends Model
 {
@@ -19,17 +22,26 @@ class Article extends Model
 
     public $dates = ['published_at'];
 
-    public function comments()
+    /**
+     * @return HasMany
+     */
+    public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
     }
 
-    public function state()
+    /**
+     * @returnHasOne
+     */
+    public function state(): HasOne
     {
         return $this->hasOne(State::class);
     }
 
-    public function tags()
+    /**
+     * @return BelongsToMany
+     */
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }
@@ -44,21 +56,40 @@ class Article extends Model
         return $this->created_at->diffForHumans();
     }
 
-    public function scopeLastLimit($query, $numbers)
+    /**
+     * @param $query
+     * @param int $numbers
+     * @return mixed
+     */
+    public function scopeLastLimit($query, int $numbers)
     {
         return $query->with('tags', 'state')->orderBy('created_at', 'desc')->limit($numbers)->get();
     }
 
-    public function scopeAllPaginate($query, $numbers)
+    /**
+     * @param $query
+     * @param int $numbers
+     * @return mixed
+     */
+    public function scopeAllPaginate($query, int $numbers)
     {
         return $query->with('tags', 'state')->orderBy('created_at', 'desc')->paginate($numbers);
     }
 
-    public function scopeFindBySlug($query, $slug)
+    /**
+     * @param $query
+     * @param string $slug
+     * @return mixed
+     */
+    public function scopeFindBySlug($query, string $slug)
     {
         return $query->with('comments', 'tags', 'state')->where('slug', $slug)->firstOrFail();
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeFindByTag($query)
     {
         return $query->with('tags', 'state')->orderBy('created_at', 'desc')->paginate(10);

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ArticleResource;
-use App\Models\Article;
-use Illuminate\Http\Request;
 use App\Services\ArticleService;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -17,12 +16,20 @@ class ArticleController extends Controller
         $this->service = $service;
     }
 
+    /**
+     * @param Request $request
+     * @return ArticleResource
+     */
     public function show(Request $request)
     {
         $article = $this->service->getArticleBySlug($request);
         return new ArticleResource($article);
     }
 
+    /**
+     * @param Request $request
+     * @return ArticleResource
+     */
     public function viewsIncrement(Request $request)
     {
         $article = $this->service->getArticleBySlug($request);
@@ -31,6 +38,10 @@ class ArticleController extends Controller
         return new ArticleResource($article);
     }
 
+    /**
+     * @param Request $request
+     * @return ArticleResource
+     */
     public function likesIncrement(Request $request)
     {
         $article = $this->service->getArticleBySlug($request);
