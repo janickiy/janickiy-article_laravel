@@ -191,12 +191,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Collective\Html\HtmlServiceProvider::class,
-
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        Yajra\DataTables\ButtonsServiceProvider::class,
-        Yajra\DataTables\HtmlServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -249,10 +243,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         // 'Example' => App\Facades\Example::class,
-        'Html' => Collective\Html\HtmlFacade::class,
-        'PermissionsHelper' => App\Helpers\PermissionsHelper::class,
-        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Form' => Collective\Html\FormFacade::class,
 
     ])->toArray(),
 
